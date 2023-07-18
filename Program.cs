@@ -20,14 +20,27 @@ namespace Assignment09
             try
             {
                 string name, email, password;
-               Again:
                 Console.WriteLine("Enter your name:");
                 name = Console.ReadLine();
                 Console.WriteLine("Enter your email address:");
                 email = Console.ReadLine();
                 Console.WriteLine("Enter password:");
                 password = Console.ReadLine();
-                if (name.Length < 6)
+                if (string.IsNullOrEmpty(name))
+                {
+                    throw new ValidationException("Name is required.");
+                }
+
+                else if (string.IsNullOrEmpty(email))
+                {
+                    throw new ValidationException("Email is required.");
+                }
+
+                else if (string.IsNullOrEmpty(password))
+                {
+                    throw new ValidationException("Password is required.");
+                }
+                else if (name.Length < 6)
                 {
                     throw new ValidationException("The length of the name should be minimum 6");
                 }
@@ -35,12 +48,13 @@ namespace Assignment09
                 {
                     throw new ValidationException("The length of the password should be minimum 8");
                 }
+
                 else
                 {
-                    Console.WriteLine("User registration is  successfull!");
-                    Console.WriteLine($"Name:  {name} \nEmail: {email} \nPassword: {password}");
+                    Console.WriteLine("\n User registration is  successfull!" + "\n\n \t Details:");
+                    Console.WriteLine($"\nName:  {name} \nEmail: {email} \nPassword: {password} \n");
                 }
-                goto Again;
+               
             }
             catch (ValidationException ve)
             {
@@ -50,9 +64,11 @@ namespace Assignment09
             {
                 Console.WriteLine("Error!!! " + ex.Message);
             }
+            
             finally
             {
-                Console.WriteLine("*********End of Registration process*******");
+                Console.WriteLine("\n *********End of Registration process*******");
+
                 Console.ReadKey();
             }
         }
